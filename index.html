@@ -1,0 +1,3358 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flapora — Web Redesign &amp; Android App Studio</title>
+    <meta
+      name="description"
+      content="Self-driven Web &amp; Android App Developer and founder of Flapora. Transforming outdated business websites and building modern Kotlin &amp; Jetpack Compose apps."
+    />
+    <meta property="og:title" content="Flapora — Web Redesign &amp; Android App Studio" />
+    <meta
+      property="og:description"
+      content="Self-driven Web &amp; Android App Developer and founder of Flapora. Transforming outdated business websites and building modern Kotlin &amp; Jetpack Compose apps."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Flapora — Web Redesign &amp; Android App Studio" />
+    <meta
+      name="twitter:description"
+      content="Self-driven Web &amp; Android App Developer and founder of Flapora. Transforming outdated business websites and building modern Kotlin &amp; Jetpack Compose apps."
+    />
+    <meta name="theme-color" content="#6c47ff" />
+    <link rel="icon" type="image/png" href="/assets/aistudio/icon.png" />
+    <link rel="apple-touch-icon" href="/assets/aistudio/icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-canvas: #faf9fe;
+        --bg-surface: #ffffff;
+        --bg-subtle: #f3f1fb;
+        --bg-lavender: #ede9fe;
+        --ink-primary: #14131b;
+        --ink-secondary: #525163;
+        --ink-muted: #717184;
+        --accent: #6c47ff;
+        --accent-hover: #5a35f0;
+        --accent-soft: #f0ecff;
+        --border-hairline: rgba(20, 19, 27, 0.08);
+        --border-violet: rgba(108, 71, 255, 0.16);
+        --shadow-card: 0 14px 36px -10px rgba(34, 24, 84, 0.08), 0 2px 8px -2px rgba(20, 19, 27, 0.04);
+        --shadow-phone: 0 30px 70px -16px rgba(54, 34, 128, 0.16), 0 8px 24px -6px rgba(20, 19, 27, 0.06);
+        --shadow-accent: 0 12px 28px -8px rgba(108, 71, 255, 0.42);
+        --radius-sm: 10px;
+        --radius-md: 16px;
+        --radius-lg: 22px;
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        margin: 0;
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--ink-primary);
+        background-color: var(--bg-canvas);
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      .font-display {
+        font-family: "Plus Jakarta Sans", "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+        letter-spacing: -0.025em;
+        margin: 0;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      section[id],
+      div[id="stack"] {
+        scroll-margin-top: 84px;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: 16px;
+        top: -64px;
+        z-index: 100;
+        padding: 10px 16px;
+        border-radius: 10px;
+        background: var(--accent);
+        color: #ffffff;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: top 140ms ease;
+      }
+
+      .skip-link:focus {
+        top: 14px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin-inline: auto;
+        padding-inline: 24px;
+      }
+
+      /* Top Bar Contract: 3-Zone Single Row */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: rgba(250, 249, 254, 0.86);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border-hairline);
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        height: 72px;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: var(--ink-primary);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .brand-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        padding: 2px;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px -4px rgba(20, 19, 27, 0.12);
+      }
+
+      .brand-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transform: scale(1.18);
+        display: block;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+
+      .nav-link {
+        font-size: 0.925rem;
+        font-weight: 500;
+        color: var(--ink-secondary);
+        white-space: nowrap;
+        flex-shrink: 0;
+        position: relative;
+        padding-block: 4px;
+        transition: color 160ms var(--ease-out);
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1.5px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 180ms var(--ease-out);
+      }
+
+      .nav-link:hover,
+      .nav-link.is-active {
+        color: var(--ink-primary);
+      }
+
+      .nav-link:hover::after,
+      .nav-link.is-active::after {
+        transform: scaleX(1);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        line-height: 1;
+        padding: 13px 22px;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out),
+          border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out), color 160ms var(--ease-out);
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #6c47ff 0%, #7d5bff 100%);
+        color: #ffffff;
+        box-shadow: var(--shadow-accent);
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #5d38f5 0%, #6f4bf7 100%);
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: var(--bg-surface);
+        color: var(--ink-primary);
+        border-color: var(--border-hairline);
+        box-shadow: 0 2px 8px rgba(20, 19, 27, 0.04);
+      }
+
+      .btn-secondary:hover {
+        border-color: rgba(108, 71, 255, 0.35);
+        background: #fdfcff;
+      }
+
+      .btn-header {
+        padding: 10px 18px;
+        font-size: 0.875rem;
+        border-radius: 10px;
+      }
+
+      .btn-icon-circle {
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.22);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        border: 1px solid var(--border-hairline);
+        background: var(--bg-surface);
+        color: var(--ink-primary);
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .mobile-drawer {
+        display: none;
+        border-top: 1px solid var(--border-hairline);
+        background: var(--bg-surface);
+        padding: 16px 24px 20px;
+      }
+
+      .mobile-drawer.is-open {
+        display: block;
+      }
+
+      .mobile-nav-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* Hero Section — Inspired directly by reference composition */
+      .hero-section {
+        position: relative;
+        padding-top: 48px;
+        padding-bottom: 44px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 76% 42%, rgba(167, 139, 250, 0.26) 0%, rgba(221, 214, 254, 0.14) 34%, transparent 64%),
+          radial-gradient(circle at 18% 20%, rgba(237, 233, 254, 0.55) 0%, transparent 50%),
+          var(--bg-canvas);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(0, 1.08fr);
+        align-items: center;
+        gap: 48px;
+        min-height: 560px;
+      }
+
+      .hero-copy {
+        max-width: 540px;
+      }
+
+      .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--accent);
+        margin-bottom: 18px;
+      }
+
+      .hero-title {
+        font-size: clamp(2.35rem, 4.3vw, 3.7rem);
+        font-weight: 800;
+        line-height: 1.09;
+        color: var(--ink-primary);
+        text-wrap: balance;
+        margin-bottom: 20px;
+      }
+
+      .hero-title-accent {
+        display: block;
+        color: var(--accent);
+      }
+
+      .hero-subtitle {
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        color: var(--ink-secondary);
+        max-width: 52ch;
+        margin-bottom: 30px;
+      }
+
+      .hero-cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 34px;
+      }
+
+      .hero-proof-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-hairline);
+      }
+
+      .stack-monograms {
+        display: flex;
+        align-items: center;
+      }
+
+      .stack-badge {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid var(--bg-canvas);
+        background: var(--bg-surface);
+        box-shadow: 0 3px 10px rgba(20, 19, 27, 0.08);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+        margin-left: -9px;
+      }
+
+      .stack-badge:first-child {
+        margin-left: 0;
+        background: #ede9fe;
+        color: #5b21b6;
+      }
+
+      .stack-badge:nth-child(2) {
+        background: #e0f2fe;
+        color: #0369a1;
+      }
+
+      .stack-badge:nth-child(3) {
+        background: #dcfce7;
+        color: #15803d;
+      }
+
+      .stack-badge:nth-child(4) {
+        background: #fef3c7;
+        color: #b45309;
+      }
+
+      .proof-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .proof-meta-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--ink-primary);
+      }
+
+      .proof-meta-sub {
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+      }
+
+      /* Right Showcase Stage: Phone Mockup + 4 Floating Cards + Signature Orb */
+      .hero-stage {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 16px;
+      }
+
+      .stage-glow {
+        position: absolute;
+        width: 440px;
+        height: 440px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(124, 92, 255, 0.22) 0%, rgba(196, 181, 253, 0.12) 48%, transparent 72%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .phone-frame {
+        position: relative;
+        z-index: 2;
+        width: 312px;
+        background: #ffffff;
+        border-radius: 38px;
+        padding: 11px;
+        border: 1px solid rgba(20, 19, 27, 0.08);
+        box-shadow: var(--shadow-phone);
+      }
+
+      .phone-screen {
+        background: #fbfbfe;
+        border-radius: 28px;
+        border: 1px solid rgba(20, 19, 27, 0.05);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 515px;
+      }
+
+      .phone-statusbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 18px 6px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .phone-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 14px 10px;
+        border-bottom: 1px solid rgba(20, 19, 27, 0.06);
+        background: #ffffff;
+      }
+
+      .phone-topbar-btn {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
+        color: var(--ink-secondary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 150ms ease, color 150ms ease;
+      }
+
+      .phone-topbar-btn:hover {
+        background: var(--bg-subtle);
+        color: var(--ink-primary);
+      }
+
+      .phone-brand-title {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+      }
+
+      .phone-chat-body {
+        flex: 1;
+        padding: 12px 12px 10px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .chat-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .chat-row.is-user {
+        justify-content: flex-end;
+      }
+
+      .chat-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        padding: 1px;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .chat-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transform: scale(1.18);
+        display: block;
+      }
+
+      .chat-bubble {
+        max-width: 82%;
+        padding: 9px 11px;
+        border-radius: 13px;
+        font-size: 0.775rem;
+        line-height: 1.45;
+      }
+
+      .chat-bubble.is-bot {
+        background: #f1f0f7;
+        color: var(--ink-primary);
+        border-top-left-radius: 4px;
+      }
+
+      .chat-bubble.is-user {
+        background: linear-gradient(135deg, #6c47ff 0%, #7c5aff 100%);
+        color: #ffffff;
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 6px 14px -6px rgba(108, 71, 255, 0.5);
+      }
+
+      .chat-time {
+        display: block;
+        margin-top: 4px;
+        font-size: 0.65rem;
+        opacity: 0.72;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .chat-file-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        width: 100%;
+        text-align: left;
+        margin-top: 2px;
+        padding: 9px 10px;
+        border-radius: 12px;
+        background: #ffffff;
+        border: 1px solid rgba(20, 19, 27, 0.08);
+        cursor: pointer;
+        transition: border-color 150ms ease, transform 150ms ease;
+      }
+
+      .chat-file-card:hover {
+        border-color: rgba(108, 71, 255, 0.4);
+        transform: translateY(-1px);
+      }
+
+      .chat-file-left {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+      }
+
+      .chat-file-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: #fee2e2;
+        color: #dc2626;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        font-weight: 800;
+        flex-shrink: 0;
+      }
+
+      .chat-file-name {
+        font-size: 0.74rem;
+        font-weight: 600;
+        color: var(--ink-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .chat-file-size {
+        font-size: 0.66rem;
+        color: var(--ink-muted);
+      }
+
+      .phone-quick-prompts {
+        display: flex;
+        gap: 6px;
+        padding: 6px 10px;
+        overflow-x: auto;
+        border-top: 1px solid rgba(20, 19, 27, 0.05);
+        background: #ffffff;
+        scrollbar-width: none;
+      }
+
+      .phone-quick-prompts::-webkit-scrollbar {
+        display: none;
+      }
+
+      .quick-prompt-btn {
+        border: 1px solid rgba(108, 71, 255, 0.2);
+        background: #f6f3ff;
+        color: #4f2fe0;
+        border-radius: 8px;
+        padding: 5px 9px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background-color 150ms ease, color 150ms ease;
+      }
+
+      .quick-prompt-btn:hover {
+        background: var(--accent);
+        color: #ffffff;
+      }
+
+      .phone-input-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 10px 10px;
+        background: #ffffff;
+        border-top: 1px solid rgba(20, 19, 27, 0.06);
+      }
+
+      .phone-input {
+        flex: 1;
+        min-width: 0;
+        border: 1px solid rgba(20, 19, 27, 0.09);
+        background: #faf9fe;
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-size: 0.76rem;
+        color: var(--ink-primary);
+      }
+
+      .phone-send-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: none;
+        background: var(--accent);
+        color: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background-color 150ms ease, transform 150ms ease;
+      }
+
+      .phone-send-btn:hover {
+        background: var(--accent-hover);
+      }
+
+      /* 4 Floating Feature Cards around Phone (matching reference image) */
+      .floating-card {
+        position: absolute;
+        z-index: 3;
+        width: 176px;
+        padding: 14px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(20, 19, 27, 0.06);
+        box-shadow: var(--shadow-card);
+        transition: transform 200ms var(--ease-out);
+      }
+
+      .floating-card:hover {
+        transform: translateY(-2px);
+      }
+
+      .floating-card--tl {
+        top: 64px;
+        left: 0;
+      }
+
+      .floating-card--bl {
+        bottom: 64px;
+        left: -6px;
+      }
+
+      .floating-card--tr {
+        top: 86px;
+        right: 0;
+      }
+
+      .floating-card--br {
+        bottom: 74px;
+        right: -4px;
+      }
+
+      .floating-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 9px;
+      }
+
+      .fi-mint {
+        background: #e6f9f0;
+        color: #0d9462;
+      }
+
+      .fi-sky {
+        background: #e6f2ff;
+        color: #0284c7;
+      }
+
+      .fi-violet {
+        background: #efe9ff;
+        color: #6c47ff;
+      }
+
+      .fi-amber {
+        background: #fff3e0;
+        color: #d97706;
+      }
+
+      .floating-title {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+        margin-bottom: 3px;
+      }
+
+      .floating-desc {
+        font-size: 0.725rem;
+        line-height: 1.4;
+        color: var(--ink-muted);
+      }
+
+      /* Signature Flapora Studio Emblem at bottom-right of phone */
+      .studio-orb {
+        position: absolute;
+        right: 34px;
+        bottom: 14px;
+        z-index: 4;
+        width: 66px;
+        height: 66px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 25%, #a78bfa 0%, #6c47ff 52%, #3b1fa8 100%);
+        box-shadow: 0 18px 34px -8px rgba(76, 42, 180, 0.52), inset 0 2px 6px rgba(255, 255, 255, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        transition: transform 200ms var(--ease-out);
+      }
+
+      .studio-orb:hover {
+        transform: scale(1.05);
+      }
+
+      .studio-orb-visor {
+        width: 42px;
+        height: 26px;
+        border-radius: 14px;
+        background: #14102b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+      }
+
+      .studio-orb-eye {
+        width: 5px;
+        height: 7px;
+        border-radius: 999px;
+        background: #c4b5fd;
+      }
+
+      /* Tech & Capabilities Strip (replacing bottom brand bar in reference) */
+      .tech-strip {
+        padding-top: 26px;
+        padding-bottom: 16px;
+        border-top: 1px solid var(--border-hairline);
+        text-align: center;
+      }
+
+      .tech-strip-label {
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: var(--ink-muted);
+        margin-bottom: 18px;
+      }
+
+      .tech-strip-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 20px 44px;
+      }
+
+      .tech-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.98rem;
+        font-weight: 700;
+        color: #6b6a7d;
+        letter-spacing: -0.015em;
+        transition: color 160ms ease;
+      }
+
+      .tech-item:hover {
+        color: var(--ink-primary);
+      }
+
+      /* Content Sections */
+      .section {
+        padding-block: 80px;
+      }
+
+      .section-alt {
+        background: #ffffff;
+        border-top: 1px solid var(--border-hairline);
+        border-bottom: 1px solid var(--border-hairline);
+      }
+
+      .section-header {
+        max-width: 640px;
+        margin-bottom: 44px;
+      }
+
+      .section-kicker {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-size: clamp(1.75rem, 3vw, 2.35rem);
+        font-weight: 800;
+        line-height: 1.18;
+        color: var(--ink-primary);
+        text-wrap: balance;
+        margin-bottom: 14px;
+      }
+
+      .section-desc {
+        font-size: 1rem;
+        color: var(--ink-secondary);
+        line-height: 1.65;
+      }
+
+      /* Bento Services Grid */
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .bento-card {
+        background: var(--bg-canvas);
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 22px;
+      }
+
+      .bento-card--wide {
+        grid-column: span 7;
+        background: linear-gradient(180deg, #ffffff 0%, #f8f6ff 100%);
+      }
+
+      .bento-card--narrow {
+        grid-column: span 5;
+        background: #ffffff;
+      }
+
+      .bento-card--half {
+        grid-column: span 6;
+        background: #ffffff;
+      }
+
+      .service-num {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .service-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+        margin-bottom: 10px;
+      }
+
+      .service-text {
+        font-size: 0.95rem;
+        color: var(--ink-secondary);
+        line-height: 1.6;
+      }
+
+      .service-meta-line {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.8125rem;
+        color: var(--ink-muted);
+        padding-top: 14px;
+        border-top: 1px solid var(--border-hairline);
+      }
+
+      /* Interactive Before/After Redesign Preview inside Card 01 */
+      .redesign-preview {
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-md);
+        padding: 16px;
+      }
+
+      .redesign-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .segmented-control {
+        display: inline-flex;
+        padding: 4px;
+        border-radius: 10px;
+        background: var(--bg-subtle);
+        gap: 4px;
+      }
+
+      .seg-btn {
+        border: none;
+        background: transparent;
+        color: var(--ink-secondary);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 7px 12px;
+        border-radius: 7px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+      }
+
+      .seg-btn.is-active {
+        background: #ffffff;
+        color: var(--ink-primary);
+        box-shadow: 0 2px 6px rgba(20, 19, 27, 0.08);
+      }
+
+      .preview-viewport {
+        border-radius: 12px;
+        border: 1px solid var(--border-hairline);
+        padding: 16px;
+        min-height: 146px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: background-color 200ms ease, border-color 200ms ease;
+      }
+
+      .preview-viewport.is-legacy {
+        background: #f3f4f6;
+        font-family: "Times New Roman", serif;
+      }
+
+      .preview-viewport.is-modern {
+        background: linear-gradient(135deg, #ffffff 0%, #f5f2ff 100%);
+        border-color: rgba(108, 71, 255, 0.22);
+      }
+
+      .preview-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(20, 19, 27, 0.08);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .stat-val {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+      }
+
+      .stat-lbl {
+        font-size: 0.74rem;
+        color: var(--ink-muted);
+      }
+
+      /* Android Compose Visual Mock inside Card 02 */
+      .compose-widget {
+        background: #faf9fe;
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .compose-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-radius: 11px;
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+      }
+
+      .compose-row-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .compose-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+        background: var(--accent);
+      }
+
+      /* About Founder & Studio Section */
+      .about-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        gap: 48px;
+        align-items: start;
+      }
+
+      .about-prose {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        color: var(--ink-secondary);
+        font-size: 1.02rem;
+        line-height: 1.7;
+      }
+
+      .about-prose strong {
+        color: var(--ink-primary);
+        font-weight: 600;
+      }
+
+      .skills-matrix {
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-lg);
+        padding: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .skill-group {
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border-hairline);
+      }
+
+      .skill-group:last-child {
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .skill-group-title {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+        margin-bottom: 6px;
+      }
+
+      .skill-group-items {
+        font-size: 0.9rem;
+        color: var(--ink-secondary);
+      }
+
+      /* Process Row */
+      .process-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .process-step {
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-md);
+        padding: 22px;
+      }
+
+      .process-num {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 10px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .process-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+        margin-bottom: 8px;
+      }
+
+      .process-desc {
+        font-size: 0.88rem;
+        color: var(--ink-secondary);
+        line-height: 1.55;
+      }
+
+      /* Contact & Project Brief Section */
+      .contact-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f6f3ff 100%);
+        border: 1px solid rgba(108, 71, 255, 0.16);
+        border-radius: 26px;
+        padding: 40px;
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 40px;
+        align-items: start;
+      }
+
+      .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .contact-meta-block {
+        padding-top: 18px;
+        border-top: 1px solid var(--border-hairline);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 0.92rem;
+        color: var(--ink-secondary);
+      }
+
+      .copy-email-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        align-self: flex-start;
+        padding: 8px 14px;
+        border-radius: 9px;
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        color: var(--ink-primary);
+        font-size: 0.84rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: border-color 150ms ease;
+      }
+
+      .copy-email-btn:hover {
+        border-color: var(--accent);
+      }
+
+      .inquiry-form {
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .field-label {
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--ink-primary);
+      }
+
+      .field-input,
+      .field-textarea {
+        width: 100%;
+        padding: 11px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(20, 19, 27, 0.12);
+        background: #faf9fe;
+        color: var(--ink-primary);
+        font-size: 0.92rem;
+        transition: border-color 150ms ease, background-color 150ms ease;
+      }
+
+      .field-input:focus,
+      .field-textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: #ffffff;
+      }
+
+      .field-textarea {
+        min-height: 104px;
+        resize: vertical;
+      }
+
+      .form-error {
+        font-size: 0.82rem;
+        color: #b91c1c;
+        font-weight: 500;
+      }
+
+      .form-success {
+        padding: 20px;
+        border-radius: 14px;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #166534;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* Scope Preview Modal */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background: rgba(20, 19, 27, 0.48);
+        backdrop-filter: blur(4px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .modal-backdrop.is-open {
+        display: flex;
+      }
+
+      .modal-panel {
+        width: 100%;
+        max-width: 520px;
+        background: #ffffff;
+        border-radius: 20px;
+        border: 1px solid var(--border-hairline);
+        padding: 28px;
+        box-shadow: 0 28px 60px -16px rgba(20, 19, 27, 0.28);
+      }
+
+      .modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .modal-close {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        border: 1px solid var(--border-hairline);
+        background: #faf9fe;
+        color: var(--ink-primary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .modal-list {
+        margin: 14px 0 22px;
+        padding-left: 18px;
+        color: var(--ink-secondary);
+        font-size: 0.93rem;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      /* Quiet Footer */
+      .site-footer {
+        padding-block: 36px;
+        border-top: 1px solid var(--border-hairline);
+        background: var(--bg-canvas);
+      }
+
+      .footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        font-size: 0.875rem;
+        color: var(--ink-muted);
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 22px;
+      }
+
+      .footer-links a:hover {
+        color: var(--ink-primary);
+      }
+
+      /* Pricing Section */
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 36px;
+      }
+
+      .price-card {
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-lg);
+        padding: 22px 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 18px;
+        transition: border-color 180ms var(--ease-out), transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+      }
+
+      .price-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(108, 71, 255, 0.35);
+      }
+
+      .price-card.is-featured {
+        background: linear-gradient(180deg, #ffffff 0%, #f6f3ff 100%);
+        border-color: rgba(108, 71, 255, 0.35);
+      }
+
+      .price-card.is-selected {
+        border-color: var(--accent);
+        box-shadow: 0 12px 28px -12px rgba(108, 71, 255, 0.36);
+      }
+
+      .price-kicker {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--accent);
+        min-height: 18px;
+        margin-bottom: 4px;
+      }
+
+      .price-name {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--ink-primary);
+        margin-bottom: 4px;
+      }
+
+      .price-pages {
+        font-size: 0.875rem;
+        color: var(--ink-muted);
+        margin-bottom: 14px;
+      }
+
+      .price-amount {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--ink-primary);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.03em;
+      }
+
+      .price-select-btn {
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 0.84rem;
+        border-radius: 10px;
+      }
+
+      .addons-split {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr);
+        gap: 24px;
+        align-items: start;
+      }
+
+      .addons-table-card {
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+      }
+
+      .addons-table-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--border-hairline);
+      }
+
+      .addons-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.92rem;
+      }
+
+      .addons-table th {
+        text-align: left;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--ink-muted);
+        padding: 12px 22px;
+        background: var(--bg-canvas);
+        border-bottom: 1px solid var(--border-hairline);
+      }
+
+      .addons-table th:last-child,
+      .addons-table td:last-child {
+        text-align: right;
+      }
+
+      .addons-table td {
+        padding: 12px 22px;
+        border-bottom: 1px solid var(--border-hairline);
+        color: var(--ink-primary);
+      }
+
+      .addons-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .addons-table tbody tr {
+        cursor: pointer;
+        transition: background-color 140ms ease;
+      }
+
+      .addons-table tbody tr:hover {
+        background: #faf9fe;
+      }
+
+      .addon-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+      }
+
+      .addon-checkbox {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--accent);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .addon-price {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-weight: 700;
+        color: var(--ink-primary);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      .estimate-card {
+        background: linear-gradient(180deg, #ffffff 0%, #f6f3ff 100%);
+        border: 1px solid rgba(108, 71, 255, 0.2);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .estimate-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 0.92rem;
+        color: var(--ink-secondary);
+      }
+
+      .estimate-divider {
+        border: none;
+        border-top: 1px solid var(--border-hairline);
+        margin: 0;
+      }
+
+      .estimate-total {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 1.65rem;
+        font-weight: 800;
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .estimate-addon-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 0.84rem;
+        color: var(--ink-secondary);
+      }
+
+      .pricing-disclaimer {
+        margin-top: 20px;
+        padding: 14px 18px;
+        border-radius: 12px;
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        font-size: 0.875rem;
+        color: var(--ink-secondary);
+        text-align: center;
+      }
+
+      .selected-plan-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        background: #f5f2ff;
+        border: 1px solid rgba(108, 71, 255, 0.22);
+        font-size: 0.85rem;
+        color: var(--ink-primary);
+      }
+
+      /* Responsive Breakpoints */
+      @media (max-width: 1120px) {
+        .pricing-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .floating-card {
+          width: 158px;
+          padding: 12px;
+        }
+        .floating-card--tl {
+          left: -10px;
+        }
+        .floating-card--bl {
+          left: -10px;
+        }
+        .floating-card--tr {
+          right: -10px;
+        }
+        .floating-card--br {
+          right: -10px;
+        }
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 36px;
+          padding-top: 12px;
+        }
+        .hero-copy {
+          max-width: 640px;
+        }
+        .bento-card--wide,
+        .bento-card--narrow,
+        .bento-card--half {
+          grid-column: span 12;
+        }
+        .pricing-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .addons-split,
+        .about-grid,
+        .contact-card {
+          grid-template-columns: 1fr;
+        }
+        .process-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      .table-scroll {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .field-input.is-invalid,
+      .field-textarea.is-invalid {
+        border-color: #dc2626;
+        background: #fef2f2;
+      }
+
+      @media (max-width: 760px) {
+        .header-inner {
+          height: 62px;
+        }
+        .nav-links,
+        .header-cta-desktop {
+          display: none;
+        }
+        .mobile-menu-btn {
+          display: inline-flex;
+        }
+        .floating-card {
+          display: none;
+        }
+        .studio-orb {
+          right: 12px;
+          bottom: 4px;
+        }
+        .form-row,
+        .pricing-grid,
+        .process-grid {
+          grid-template-columns: 1fr;
+        }
+        .contact-card {
+          padding: 24px;
+        }
+        .section {
+          padding-block: 56px;
+        }
+        .addons-table th,
+        .addons-table td {
+          padding: 11px 14px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#top" class="skip-link">Skip to main content</a>
+    <!-- Top Navigation Bar (Strict 3-Zone Contract) -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <!-- Zone 1: Brand Wordmark -->
+        <a href="#top" class="brand-mark" aria-label="Flapora Home">
+          <span class="brand-icon" aria-hidden="true">
+            <img src="/assets/aistudio/icon.png" alt="" width="40" height="40" referrerpolicy="no-referrer" />
+          </span>
+          <span>Flapora</span>
+        </a>
+
+        <!-- Zone 2: Concise Single-Line Nav Links -->
+        <nav class="nav-links" aria-label="Primary Navigation">
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#pricing" class="nav-link">Pricing</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#process" class="nav-link">Process</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+
+        <!-- Zone 3: Single Primary Action -->
+        <div class="header-actions">
+          <a href="#contact" class="btn btn-primary btn-header header-cta-desktop">Start a Project</a>
+          <button
+            type="button"
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="mobileDrawer"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="mobile-drawer" id="mobileDrawer">
+        <nav class="mobile-nav-list" aria-label="Mobile Navigation">
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#pricing" class="nav-link">Pricing</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#process" class="nav-link">Process</a>
+          <a href="#contact" class="btn btn-primary" style="margin-top: 6px; width: 100%;">Start a Project</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="container">
+          <div class="hero-grid">
+            <!-- Left Editorial Proposition -->
+            <div class="hero-copy">
+              <div class="hero-kicker">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                  <path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2L12 3z" />
+                </svg>
+                <span>Flapora Studio · Web Redesign &amp; Android Apps</span>
+              </div>
+
+              <h1 class="hero-title">
+                Modern web &amp; Android,
+                <span class="hero-title-accent">built to convert.</span>
+              </h1>
+
+              <p class="hero-subtitle">
+                I'm a self-driven Web &amp; Android App Developer and the founder of Flapora. I transform outdated
+                business websites into fast, responsive digital experiences and build native Android apps using HTML,
+                CSS, JavaScript, TSX, Kotlin, and Jetpack Compose.
+              </p>
+
+              <div class="hero-cta-row">
+                <a href="#contact" class="btn btn-primary">
+                  <span>Request a Redesign</span>
+                  <span class="btn-icon-circle" aria-hidden="true">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </a>
+                <a href="#services" class="btn btn-secondary">
+                  <span>Explore Services</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polygon points="6 4 20 12 6 20 6 4" />
+                  </svg>
+                </a>
+              </div>
+
+              <div class="hero-proof-row">
+                <div class="stack-monograms" aria-hidden="true">
+                  <span class="stack-badge">TSX</span>
+                  <span class="stack-badge">JS</span>
+                  <span class="stack-badge">KT</span>
+                  <span class="stack-badge">UI</span>
+                </div>
+                <div class="proof-meta">
+                  <span class="proof-meta-title">HTML, CSS, JS, TSX, Kotlin &amp; Jetpack Compose</span>
+                  <span class="proof-meta-sub">Web redesign studio · Native Android engineering</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Interactive Stage (Phone Mockup + 4 Floating Cards + Signature Orb) -->
+            <div class="hero-stage">
+              <div class="stage-glow" aria-hidden="true"></div>
+
+              <!-- Floating Card 1: Top Left -->
+              <div class="floating-card floating-card--tl">
+                <div class="floating-icon fi-mint" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="14" rx="2" />
+                    <path d="M8 20h8" />
+                  </svg>
+                </div>
+                <div class="floating-title">Website Redesign</div>
+                <p class="floating-desc">Outdated business sites rebuilt for modern clarity</p>
+              </div>
+
+              <!-- Floating Card 2: Bottom Left -->
+              <div class="floating-card floating-card--bl">
+                <div class="floating-icon fi-sky" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                  </svg>
+                </div>
+                <div class="floating-title">Clean Frontend</div>
+                <p class="floating-desc">Responsive HTML, CSS, JavaScript &amp; TSX builds</p>
+              </div>
+
+              <!-- Floating Card 3: Top Right -->
+              <div class="floating-card floating-card--tr">
+                <div class="floating-icon fi-violet" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="7" y="2" width="10" height="20" rx="2" />
+                    <path d="M11 18h2" />
+                  </svg>
+                </div>
+                <div class="floating-title">Android Native</div>
+                <p class="floating-desc">Kotlin &amp; Jetpack Compose mobile experiences</p>
+              </div>
+
+              <!-- Floating Card 4: Bottom Right -->
+              <div class="floating-card floating-card--br">
+                <div class="floating-icon fi-amber" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                  </svg>
+                </div>
+                <div class="floating-title">Responsive Craft</div>
+                <p class="floating-desc">Fast, user-friendly interfaces built for every screen</p>
+              </div>
+
+              <!-- Central Phone Interactive Simulator -->
+              <div class="phone-frame" role="region" aria-label="Interactive Flapora Service Preview">
+                <div class="phone-screen">
+                  <div class="phone-statusbar">
+                    <span>9:41</span>
+                    <span>5G · 100%</span>
+                  </div>
+
+                  <div class="phone-topbar">
+                    <button type="button" class="phone-topbar-btn" id="resetChatBtn" title="Reset preview chat" aria-label="Reset preview chat">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+                        <path d="M3 3v5h5" />
+                      </svg>
+                    </button>
+                    <span class="phone-brand-title">Flapora Studio</span>
+                    <button type="button" class="phone-topbar-btn" id="openScopeModalBtn" title="Open sample project scope" aria-label="Open sample project scope">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div class="phone-chat-body" id="phoneChatBody">
+                    <!-- Populated via JS for crisp interactivity -->
+                  </div>
+
+                  <div class="phone-quick-prompts" aria-label="Quick questions">
+                    <button type="button" class="quick-prompt-btn" data-prompt="Can you redesign our old website?">
+                      Website Redesign
+                    </button>
+                    <button type="button" class="quick-prompt-btn" data-prompt="What are your website redesign prices?">
+                      Pricing (INR)
+                    </button>
+                    <button type="button" class="quick-prompt-btn" data-prompt="Tell me about Android app development.">
+                      Android App
+                    </button>
+                    <button type="button" class="quick-prompt-btn" data-prompt="What technologies do you use?">
+                      Tech Stack
+                    </button>
+                  </div>
+
+                  <form class="phone-input-bar" id="phoneChatForm">
+                    <input
+                      type="text"
+                      class="phone-input"
+                      id="phoneChatInput"
+                      placeholder="Ask about a website or app..."
+                      autocomplete="off"
+                      aria-label="Ask about a website or app"
+                    />
+                    <button type="submit" class="phone-send-btn" aria-label="Send message">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Signature Studio Orb -->
+              <button
+                type="button"
+                class="studio-orb"
+                id="orbTriggerBtn"
+                aria-label="Focus interactive studio preview"
+                title="Try asking Flapora Studio"
+              >
+                <span class="studio-orb-visor" aria-hidden="true">
+                  <span class="studio-orb-eye"></span>
+                  <span class="studio-orb-eye"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Core Technologies Strip -->
+          <div class="tech-strip" id="stack">
+            <div class="tech-strip-label">Core technologies &amp; engineering stack</div>
+            <div class="tech-strip-row">
+              <span class="tech-item">HTML5 &amp; CSS3</span>
+              <span class="tech-item">JavaScript</span>
+              <span class="tech-item">TypeScript / TSX</span>
+              <span class="tech-item">Kotlin</span>
+              <span class="tech-item">Jetpack Compose</span>
+              <span class="tech-item">Responsive UI/UX</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section (Asymmetric Bento Grid) -->
+      <section class="section section-alt" id="services">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-kicker">Services &amp; Capabilities</div>
+            <h2 class="section-title">Practical digital solutions built for real businesses</h2>
+            <p class="section-desc">
+              Every project is crafted with hands-on frontend and Android engineering—delivering responsive layouts,
+              clean codebases, and interfaces your customers trust.
+            </p>
+          </div>
+
+          <div class="bento-grid">
+            <!-- 01. Flapora Website Redesign -->
+            <article class="bento-card bento-card--wide">
+              <div>
+                <div class="service-num">01. Flapora Website Redesign</div>
+                <h3 class="service-title">Turn outdated business websites into modern digital storefronts</h3>
+                <p class="service-text">
+                  Slow, cluttered, or non-mobile websites cost businesses credibility before a visitor reads a single
+                  line. Flapora audits your existing site and rebuilds it from the ground up with clean typography,
+                  responsive grids, and clear conversion paths.
+                </p>
+              </div>
+
+              <div class="redesign-preview">
+                <div class="redesign-toolbar">
+                  <span style="font-size: 0.82rem; font-weight: 600; color: var(--ink-primary);">
+                    Redesign Comparison
+                  </span>
+                  <div class="segmented-control" role="tablist" aria-label="Website redesign comparison">
+                    <button type="button" class="seg-btn" id="btnLegacyView" role="tab" aria-selected="false">
+                      Before (Legacy)
+                    </button>
+                    <button type="button" class="seg-btn is-active" id="btnModernView" role="tab" aria-selected="true">
+                      After (Flapora)
+                    </button>
+                  </div>
+                </div>
+
+                <div class="preview-viewport is-modern" id="redesignViewport">
+                  <div>
+                    <div id="previewTag" style="font-size: 0.74rem; font-weight: 700; color: var(--accent); margin-bottom: 4px;">
+                      Flapora Modern Build
+                    </div>
+                    <div id="previewHeadline" style="font-size: 1.05rem; font-weight: 700; color: var(--ink-primary);">
+                      Responsive hero, clear service hierarchy, and instant mobile inquiry flow
+                    </div>
+                  </div>
+                  <div class="preview-stats">
+                    <div>
+                      <div class="stat-val" id="statMobile">100%</div>
+                      <div class="stat-lbl">Mobile responsive</div>
+                    </div>
+                    <div>
+                      <div class="stat-val" id="statLayout">Clean</div>
+                      <div class="stat-lbl">Visual hierarchy</div>
+                    </div>
+                    <div>
+                      <div class="stat-val" id="statCode">Semantic</div>
+                      <div class="stat-lbl">HTML · CSS · JS</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="service-meta-line">
+                <span>Responsive Layouts</span>
+                <span aria-hidden="true">·</span>
+                <span>UI Modernization</span>
+                <span aria-hidden="true">·</span>
+                <span>Single-File or Component Builds</span>
+              </div>
+            </article>
+
+            <!-- 02. Android App Development -->
+            <article class="bento-card bento-card--narrow">
+              <div>
+                <div class="service-num">02. Native Android Development</div>
+                <h3 class="service-title">Kotlin &amp; Jetpack Compose apps</h3>
+                <p class="service-text">
+                  Modern Android applications engineered with declarative Jetpack Compose UI, clean Kotlin state
+                  architecture, and smooth touch ergonomics designed for everyday mobile users.
+                </p>
+              </div>
+
+              <div class="compose-widget" aria-label="Android engineering highlights">
+                <div class="compose-row">
+                  <div class="compose-row-left">
+                    <span class="compose-dot" aria-hidden="true"></span>
+                    <span style="font-size: 0.85rem; font-weight: 600;">Jetpack Compose UI</span>
+                  </div>
+                  <span style="font-size: 0.78rem; color: var(--ink-muted);">Material 3</span>
+                </div>
+                <div class="compose-row">
+                  <div class="compose-row-left">
+                    <span class="compose-dot" aria-hidden="true"></span>
+                    <span style="font-size: 0.85rem; font-weight: 600;">Kotlin Architecture</span>
+                  </div>
+                  <span style="font-size: 0.78rem; color: var(--ink-muted);">Clean State</span>
+                </div>
+                <div class="compose-row">
+                  <div class="compose-row-left">
+                    <span class="compose-dot" aria-hidden="true"></span>
+                    <span style="font-size: 0.85rem; font-weight: 600;">Adaptive Screens</span>
+                  </div>
+                  <span style="font-size: 0.78rem; color: var(--ink-muted);">Phones &amp; Tablets</span>
+                </div>
+              </div>
+
+              <div class="service-meta-line">
+                <span>Kotlin</span>
+                <span aria-hidden="true">·</span>
+                <span>Jetpack Compose</span>
+                <span aria-hidden="true">·</span>
+                <span>User-Friendly Flows</span>
+              </div>
+            </article>
+
+            <!-- 03. Frontend & TSX Engineering -->
+            <article class="bento-card bento-card--half">
+              <div>
+                <div class="service-num">03. Frontend Engineering</div>
+                <h3 class="service-title">HTML, CSS, JavaScript &amp; TSX interfaces</h3>
+                <p class="service-text">
+                  Whether your project calls for a lightweight single-file HTML landing page or a structured TSX
+                  component application, I write readable, maintainable code focused on speed and clarity.
+                </p>
+              </div>
+              <div class="service-meta-line">
+                <span>HTML5 &amp; CSS3</span>
+                <span aria-hidden="true">·</span>
+                <span>Vanilla JS</span>
+                <span aria-hidden="true">·</span>
+                <span>TypeScript TSX</span>
+              </div>
+            </article>
+
+            <!-- 04. UI Modernization & Polish -->
+            <article class="bento-card bento-card--half">
+              <div>
+                <div class="service-num">04. UI Modernization &amp; Polish</div>
+                <h3 class="service-title">User-friendly solutions built with clean code</h3>
+                <p class="service-text">
+                  I combine thoughtful layout design with hands-on coding across web and mobile—refining navigation,
+                  responsiveness, and everyday usability so every product feels dependable.
+                </p>
+              </div>
+              <div class="service-meta-line">
+                <span>Clean Code</span>
+                <span aria-hidden="true">·</span>
+                <span>Mobile-First Polish</span>
+                <span aria-hidden="true">·</span>
+                <span>Practical Problem Solving</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Flapora Website Redesign Pricing (India) -->
+      <section class="section" id="pricing">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-kicker">Transparent Pricing (India)</div>
+            <h2 class="section-title">Flapora – Website Redesign Pricing (India)</h2>
+            <p class="section-desc">
+              Choose a package based on your website size, or customize with optional additional work below to preview
+              your estimated budget in INR.
+            </p>
+          </div>
+
+          <div class="pricing-grid" id="pricingPackagesGrid">
+            <article class="price-card" data-pkg="Starter" data-pages="1 page" data-maxpages="1" data-price="3999">
+              <div>
+                <div class="price-kicker">Single Landing Page</div>
+                <h3 class="price-name">Starter</h3>
+                <div class="price-pages">1 page</div>
+                <div class="price-amount">₹3,999</div>
+              </div>
+              <button type="button" class="btn btn-secondary price-select-btn" data-select-pkg="Starter">
+                Select Starter
+              </button>
+            </article>
+
+            <article class="price-card" data-pkg="Basic" data-pages="Up to 3 pages" data-maxpages="3" data-price="7999">
+              <div>
+                <div class="price-kicker">Small Business</div>
+                <h3 class="price-name">Basic</h3>
+                <div class="price-pages">Up to 3 pages</div>
+                <div class="price-amount">₹7,999</div>
+              </div>
+              <button type="button" class="btn btn-secondary price-select-btn" data-select-pkg="Basic">
+                Select Basic
+              </button>
+            </article>
+
+            <article class="price-card is-featured is-selected" data-pkg="Business" data-pages="Up to 5 pages" data-maxpages="5" data-price="11999">
+              <div>
+                <div class="price-kicker">Popular Choice</div>
+                <h3 class="price-name">Business</h3>
+                <div class="price-pages">Up to 5 pages</div>
+                <div class="price-amount">₹11,999</div>
+              </div>
+              <button type="button" class="btn btn-primary price-select-btn" data-select-pkg="Business">
+                Selected
+              </button>
+            </article>
+
+            <article class="price-card" data-pkg="Professional" data-pages="Up to 8 pages" data-maxpages="8" data-price="17999">
+              <div>
+                <div class="price-kicker">Growing Brand</div>
+                <h3 class="price-name">Professional</h3>
+                <div class="price-pages">Up to 8 pages</div>
+                <div class="price-amount">₹17,999</div>
+              </div>
+              <button type="button" class="btn btn-secondary price-select-btn" data-select-pkg="Professional">
+                Select Professional
+              </button>
+            </article>
+
+            <article class="price-card" data-pkg="Premium" data-pages="Up to 10 pages" data-maxpages="10" data-price="24999">
+              <div>
+                <div class="price-kicker">Full Scale Redesign</div>
+                <h3 class="price-name">Premium</h3>
+                <div class="price-pages">Up to 10 pages</div>
+                <div class="price-amount">₹24,999</div>
+              </div>
+              <button type="button" class="btn btn-secondary price-select-btn" data-select-pkg="Premium">
+                Select Premium
+              </button>
+            </article>
+          </div>
+
+          <div class="addons-split">
+            <div class="addons-table-card">
+              <div class="addons-table-head">
+                <div>
+                  <h3 style="font-size: 1.08rem; font-weight: 700; color: var(--ink-primary);">Additional Work</h3>
+                  <p style="font-size: 0.82rem; color: var(--ink-muted); margin-top: 2px;">
+                    Select any optional add-on services to include in your estimate
+                  </p>
+                </div>
+                <button type="button" class="btn btn-secondary" id="clearAddonsBtn" style="padding: 8px 12px; font-size: 0.78rem;">
+                  Clear Add-ons
+                </button>
+              </div>
+
+              <div class="table-scroll">
+                <table class="addons-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Additional service</th>
+                      <th scope="col">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody id="addonsTableBody">
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Extra page" data-min="1500" data-max="1500" data-type="fixed" />
+                        <span>Extra page</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">₹1,500</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Additional revision round" data-min="500" data-max="500" data-type="fixed" />
+                        <span>Additional revision round</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">₹500</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Basic animations" data-min="1000" data-max="1000" data-type="fixed" />
+                        <span>Basic animations</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">₹1,000</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Image optimization" data-min="500" data-max="500" data-type="fixed" />
+                        <span>Image optimization</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">₹500</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Content formatting" data-min="300" data-max="300" data-type="per-page" />
+                        <span>Content formatting</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">₹300/page</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Responsive adjustments" data-min="500" data-max="1000" data-type="range" />
+                        <span>Responsive adjustments</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">₹500–₹1,000</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Urgent delivery" data-min="0" data-max="0" data-type="urgent" />
+                        <span>Urgent delivery</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">+25%</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Custom UI section" data-min="500" data-max="1500" data-type="range" />
+                        <span>Custom UI section</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">₹500–₹1,500</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Website performance optimization" data-min="1000" data-max="1000" data-type="fixed" />
+                        <span>Website performance optimization</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">₹1,000</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label class="addon-label">
+                        <input type="checkbox" class="addon-checkbox" data-name="Favicon and basic branding setup" data-min="500" data-max="500" data-type="fixed" />
+                        <span>Favicon and basic branding setup</span>
+                      </label>
+                    </td>
+                    <td class="addon-price">₹500</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <aside class="estimate-card" aria-label="Selected package estimate">
+              <div>
+                <div class="price-kicker" style="margin-bottom: 4px;">Estimate Summary</div>
+                <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--ink-primary);">Your Redesign Plan</h3>
+              </div>
+
+              <div class="estimate-row">
+                <span>Base Package</span>
+                <strong id="estPackageLabel" style="color: var(--ink-primary);">Business (Up to 5 pages)</strong>
+              </div>
+              <div class="estimate-row">
+                <span>Package Price</span>
+                <strong id="estPackagePrice" style="color: var(--ink-primary); font-variant-numeric: tabular-nums;">₹11,999</strong>
+              </div>
+
+              <hr class="estimate-divider" />
+
+              <div>
+                <div style="font-size: 0.82rem; font-weight: 600; color: var(--ink-primary); margin-bottom: 6px;">
+                  Selected Additional Work
+                </div>
+                <div class="estimate-addon-list" id="estAddonList">
+                  <span>None selected</span>
+                </div>
+              </div>
+
+              <hr class="estimate-divider" />
+
+              <div class="estimate-row" style="align-items: center;">
+                <span style="font-weight: 600; color: var(--ink-primary);">Estimated Total (INR)</span>
+                <span class="estimate-total" id="estTotalDisplay">₹11,999</span>
+              </div>
+
+              <button type="button" class="btn btn-primary" id="applyEstimateBtn" style="width: 100%; justify-content: center;">
+                Proceed with This Plan
+              </button>
+            </aside>
+          </div>
+
+          <p class="pricing-disclaimer">
+            All prices are in INR. Hosting, domain, backend development and deployment are excluded.
+          </p>
+        </div>
+      </section>
+
+      <!-- About & Founder Story -->
+      <section class="section section-alt" id="about">
+        <div class="container">
+          <div class="about-grid">
+            <div>
+              <div class="section-kicker">About Me &amp; Flapora</div>
+              <h2 class="section-title">Self-driven craft with a clear studio mission</h2>
+              <div class="about-prose">
+                <p>
+                  I'm a self-driven <strong>Web &amp; Android App Developer</strong> with a passion for building modern
+                  digital experiences. I work hands-on with <strong>HTML, CSS, JavaScript, TSX, Kotlin, and Jetpack
+                  Compose</strong> to design and engineer efficient, user-friendly solutions.
+                </p>
+                <p>
+                  I founded <strong>Flapora</strong>, a website redesign studio dedicated to transforming outdated
+                  business websites into modern, responsive, and professional digital experiences. Alongside website
+                  redesigns, I build Android apps and am steadily growing Flapora into a trusted digital solutions
+                  brand.
+                </p>
+              </div>
+            </div>
+
+            <div class="skills-matrix" aria-label="Technical capabilities breakdown">
+              <div class="skill-group">
+                <div class="skill-group-title">Web Development &amp; Redesign</div>
+                <p class="skill-group-items">
+                  HTML5, modern CSS (Grid, Flexbox, custom properties), JavaScript, TypeScript / TSX, responsive design,
+                  and UI/UX modernization.
+                </p>
+              </div>
+              <div class="skill-group">
+                <div class="skill-group-title">Android App Development</div>
+                <p class="skill-group-items">
+                  Kotlin, Jetpack Compose declarative UI, Material Design principles, clean navigation, and responsive
+                  mobile layouts.
+                </p>
+              </div>
+              <div class="skill-group">
+                <div class="skill-group-title">Studio &amp; Workflow</div>
+                <p class="skill-group-items">
+                  Legacy website audits, interactive prototyping, responsive refactoring, and direct founder-to-client
+                  communication.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Process Section -->
+      <section class="section" id="process">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-kicker">How Flapora Works</div>
+            <h2 class="section-title">A straightforward four-step workflow</h2>
+            <p class="section-desc">
+              No bloated agency layers. From reviewing your existing website or app idea to shipping the final build,
+              every step stays transparent and focused.
+            </p>
+          </div>
+
+          <div class="process-grid">
+            <div class="process-step">
+              <div class="process-num">01. Audit &amp; Scope</div>
+              <h3 class="process-title">Review what needs fixing</h3>
+              <p class="process-desc">
+                We examine your current website or Android app concept, pinpoint friction areas, and define clear goals.
+              </p>
+            </div>
+            <div class="process-step">
+              <div class="process-num">02. Modern Design</div>
+              <h3 class="process-title">Restructure layout &amp; UI</h3>
+              <p class="process-desc">
+                Typography, spacing, and mobile responsiveness are redesigned so visitors immediately understand your
+                value.
+              </p>
+            </div>
+            <div class="process-step">
+              <div class="process-num">03. Clean Build</div>
+              <h3 class="process-title">Develop with precision</h3>
+              <p class="process-desc">
+                Built from scratch using HTML/CSS/JS, TSX, or Kotlin &amp; Jetpack Compose—focused on clean code,
+                speed, and maintainability.
+              </p>
+            </div>
+            <div class="process-step">
+              <div class="process-num">04. Launch &amp; Support</div>
+              <h3 class="process-title">Ship &amp; refine</h3>
+              <p class="process-desc">
+                Cross-device verification, smooth handoff, and ongoing support as your brand and product grow.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact & Lead Capture -->
+      <section class="section section-alt" id="contact">
+        <div class="container">
+          <div class="contact-card">
+            <div class="contact-details">
+              <div>
+                <div class="section-kicker">Start a Project</div>
+                <h2 class="section-title">Ready to modernize your website or build an Android app?</h2>
+                <p class="section-desc">
+                  Share a link to your current website or tell me about the Android app you want to create. You will get
+                  a clear, practical plan from Flapora.
+                </p>
+              </div>
+
+              <div class="contact-meta-block">
+                <span><strong>Studio:</strong> Flapora — Website Redesign &amp; Android Development</span>
+                <span><strong>Core Stack:</strong> HTML, CSS, JS, TSX, Kotlin, Jetpack Compose</span>
+                <button type="button" class="copy-email-btn" id="copyEmailBtn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="9" y="9" width="13" height="13" rx="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <span id="copyEmailLabel">Copy studio email: saifeemushahid8@gmail.com</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="inquiry-form" id="inquiryContainer">
+              <div class="field-group">
+                <span class="field-label">What are you looking to build?</span>
+                <div class="segmented-control" id="serviceSelector" role="radiogroup" aria-label="Service type">
+                  <button type="button" class="seg-btn is-active" data-service="Website Redesign">
+                    Website Redesign
+                  </button>
+                  <button type="button" class="seg-btn" data-service="Android App">
+                    Android App
+                  </button>
+                  <button type="button" class="seg-btn" data-service="Web + Android">
+                    Web + Android
+                  </button>
+                </div>
+              </div>
+
+              <div class="selected-plan-banner" id="selectedPlanBanner" style="display: none;">
+                <span id="selectedPlanText"></span>
+                <button type="button" id="clearSelectedPlanBtn" style="border: none; background: transparent; color: var(--accent); font-weight: 700; cursor: pointer; font-size: 0.8rem;">
+                  Clear
+                </button>
+              </div>
+
+              <form id="projectInquiryForm" novalidate style="display: flex; flex-direction: column; gap: 14px;">
+                <div class="form-row">
+                  <div class="field-group">
+                    <label for="clientName" class="field-label">Your Name</label>
+                    <input
+                      type="text"
+                      id="clientName"
+                      name="clientName"
+                      class="field-input"
+                      placeholder="Alex Rivera"
+                      required
+                    />
+                  </div>
+                  <div class="field-group">
+                    <label for="clientEmail" class="field-label">Email Address</label>
+                    <input
+                      type="email"
+                      id="clientEmail"
+                      name="clientEmail"
+                      class="field-input"
+                      placeholder="alex@company.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="field-group">
+                  <label for="projectUrl" class="field-label">Current Website URL or App Concept (Optional)</label>
+                  <input
+                    type="text"
+                    id="projectUrl"
+                    name="projectUrl"
+                    class="field-input"
+                    placeholder="https://yourbusiness.com or Android booking app"
+                  />
+                </div>
+
+                <div class="field-group">
+                  <label for="projectNotes" class="field-label">Project Details</label>
+                  <textarea
+                    id="projectNotes"
+                    name="projectNotes"
+                    class="field-textarea"
+                    placeholder="Tell me what feels outdated on your current site or what features your Android app needs..."
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="form-error" id="formErrorMsg" role="alert" aria-live="polite" style="display: none;"></div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                  Send via Gmail
+                </button>
+              </form>
+
+              <div class="form-success" id="formSuccessBox" style="display: none; padding: 14px 16px;" role="status" aria-live="polite">
+                <p id="formSuccessSummary" style="font-size: 0.875rem; line-height: 1.5; margin: 0;"></p>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px;">
+                  <a id="mailtoFallbackLink" href="mailto:saifeemushahid8@gmail.com" class="btn btn-primary" style="padding: 9px 14px; font-size: 0.82rem;">
+                    Retry Gmail App
+                  </a>
+                  <a id="gmailWebFallbackLink" href="https://mail.google.com/mail/?view=cm&fs=1&to=saifeemushahid8@gmail.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 9px 14px; font-size: 0.82rem;">
+                    Open Gmail Web
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Quiet Footer -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <strong style="color: var(--ink-primary); font-family: 'Plus Jakarta Sans', sans-serif;">Flapora</strong>
+          <span aria-hidden="true">·</span>
+          <span>Website Redesign Studio &amp; Android App Development</span>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="#services">Services</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#about">About</a>
+          <a href="#process">Process</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div>&copy; <span id="yearSpan">2026</span> Flapora. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <!-- Project Scope Sample Modal (Triggered from phone PDF attachment) -->
+    <div class="modal-backdrop" id="scopeModal" role="dialog" aria-modal="true" aria-labelledby="scopeModalTitle">
+      <div class="modal-panel">
+        <div class="modal-head">
+          <h3 id="scopeModalTitle" style="font-size: 1.2rem; font-weight: 700;">Flapora Redesign &amp; App Scope</h3>
+          <button type="button" class="modal-close" id="closeScopeModalBtn" aria-label="Close modal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <p style="font-size: 0.94rem; color: var(--ink-secondary); line-height: 1.6;">
+          Here is what a typical Flapora engagement includes when modernizing an existing business website or building
+          a new Android application:
+        </p>
+        <ul class="modal-list">
+          <li><strong>UX &amp; Visual Audit:</strong> Identify outdated layouts, broken mobile spacing, and unclear calls to action.</li>
+          <li><strong>Responsive Build:</strong> Clean HTML, CSS, JavaScript, or TSX frontend tested across desktop and mobile screens.</li>
+          <li><strong>Android Option:</strong> Native Kotlin &amp; Jetpack Compose screens tailored for smooth performance.</li>
+          <li><strong>Cross-Device Polish:</strong> Thorough layout testing and code refinement for dependable delivery.</li>
+        </ul>
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="btn btn-secondary" id="dismissScopeBtn" style="padding: 10px 16px; font-size: 0.875rem;">
+            Close
+          </button>
+          <a href="#contact" class="btn btn-primary" id="scopeStartProjectBtn" style="padding: 10px 18px; font-size: 0.875rem;">
+            Start Your Project
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        // Dynamic footer year
+        var yearEl = document.getElementById("yearSpan");
+        if (yearEl) {
+          yearEl.textContent = String(new Date().getFullYear());
+        }
+
+        // Mobile drawer toggle
+        var mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        var mobileDrawer = document.getElementById("mobileDrawer");
+
+        if (mobileMenuBtn && mobileDrawer) {
+          mobileMenuBtn.addEventListener("click", function () {
+            var isOpen = mobileDrawer.classList.toggle("is-open");
+            mobileMenuBtn.setAttribute("aria-expanded", String(isOpen));
+          });
+
+          mobileDrawer.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+              mobileDrawer.classList.remove("is-open");
+              mobileMenuBtn.setAttribute("aria-expanded", "false");
+            });
+          });
+        }
+
+        // Interactive Phone Chat Simulator (Echoing the reference mockup with real service content)
+        var chatBody = document.getElementById("phoneChatBody");
+        var chatForm = document.getElementById("phoneChatForm");
+        var chatInput = document.getElementById("phoneChatInput");
+        var resetChatBtn = document.getElementById("resetChatBtn");
+        var orbTriggerBtn = document.getElementById("orbTriggerBtn");
+
+        function getInitialMessages() {
+          return [
+            {
+              sender: "bot",
+              text: "Hi! Welcome to Flapora. Looking to redesign a website or build an Android app?",
+              time: "9:41 AM"
+            },
+            {
+              sender: "user",
+              text: "Our business website looks outdated on mobile. Can Flapora redesign it?",
+              time: "9:41 AM"
+            },
+            {
+              sender: "bot",
+              text: "Yes! I rebuild legacy sites into modern, responsive web experiences using clean HTML, CSS, JavaScript & TSX.",
+              time: "9:41 AM",
+              attachment: {
+                name: "Flapora_Redesign_Scope.pdf",
+                meta: "Scope Overview · Tap to preview"
+              }
+            }
+          ];
+        }
+
+        function createAvatarImg() {
+          var img = document.createElement("img");
+          img.src = "/assets/aistudio/icon.png";
+          img.alt = "";
+          img.setAttribute("referrerpolicy", "no-referrer");
+          return img;
+        }
+
+        function renderMessages(messages) {
+          if (!chatBody) return;
+          chatBody.innerHTML = "";
+
+          messages.forEach(function (msg) {
+            var row = document.createElement("div");
+            row.className = "chat-row " + (msg.sender === "user" ? "is-user" : "is-bot");
+
+            if (msg.sender === "bot") {
+              var avatar = document.createElement("div");
+              avatar.className = "chat-avatar";
+              avatar.setAttribute("aria-hidden", "true");
+              avatar.appendChild(createAvatarImg());
+              row.appendChild(avatar);
+            }
+
+            var col = document.createElement("div");
+            col.style.maxWidth = msg.sender === "user" ? "84%" : "86%";
+            col.style.display = "flex";
+            col.style.flexDirection = "column";
+            col.style.gap = "6px";
+
+            var bubble = document.createElement("div");
+            bubble.className = "chat-bubble " + (msg.sender === "user" ? "is-user" : "is-bot");
+            bubble.style.maxWidth = "100%";
+            bubble.textContent = msg.text;
+
+            var timeEl = document.createElement("span");
+            timeEl.className = "chat-time";
+            timeEl.textContent = msg.time;
+            bubble.appendChild(timeEl);
+            col.appendChild(bubble);
+
+            if (msg.attachment) {
+              var fileBtn = document.createElement("button");
+              fileBtn.type = "button";
+              fileBtn.className = "chat-file-card";
+              fileBtn.addEventListener("click", openScopeModal);
+
+              var left = document.createElement("div");
+              left.className = "chat-file-left";
+
+              var icon = document.createElement("div");
+              icon.className = "chat-file-icon";
+              icon.textContent = "PDF";
+
+              var textWrap = document.createElement("div");
+              textWrap.style.minWidth = "0";
+              var nameEl = document.createElement("div");
+              nameEl.className = "chat-file-name";
+              nameEl.textContent = msg.attachment.name;
+              var sizeEl = document.createElement("div");
+              sizeEl.className = "chat-file-size";
+              sizeEl.textContent = msg.attachment.meta;
+
+              textWrap.appendChild(nameEl);
+              textWrap.appendChild(sizeEl);
+              left.appendChild(icon);
+              left.appendChild(textWrap);
+              fileBtn.appendChild(left);
+
+              var arrow = document.createElement("span");
+              arrow.style.fontSize = "0.72rem";
+              arrow.style.fontWeight = "700";
+              arrow.style.color = "#6c47ff";
+              arrow.textContent = "View";
+              fileBtn.appendChild(arrow);
+
+              col.appendChild(fileBtn);
+            }
+
+            row.appendChild(col);
+            chatBody.appendChild(row);
+          });
+
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        var chatHistory = getInitialMessages();
+        renderMessages(chatHistory);
+
+        function generateStudioReply(query) {
+          var q = query.toLowerCase();
+          if (q.indexOf("price") !== -1 || q.indexOf("pricing") !== -1 || q.indexOf("cost") !== -1 || q.indexOf("inr") !== -1 || q.indexOf("package") !== -1 || q.indexOf("rate") !== -1) {
+            return "Website redesign packages in India start at ₹3,999 (Starter, 1 page), ₹7,999 (Basic), ₹11,999 (Business), ₹17,999 (Professional), and ₹24,999 (Premium, up to 10 pages). See the Pricing section below for add-ons!";
+          }
+          if (q.indexOf("android") !== -1 || q.indexOf("kotlin") !== -1 || q.indexOf("compose") !== -1 || q.indexOf("app") !== -1) {
+            return "I develop native Android apps using Kotlin and Jetpack Compose—focused on smooth navigation, Material 3 UI, and practical everyday usability.";
+          }
+          if (q.indexOf("tech") !== -1 || q.indexOf("stack") !== -1 || q.indexOf("skill") !== -1 || q.indexOf("code") !== -1 || q.indexOf("tsx") !== -1) {
+            return "My hands-on stack covers HTML, CSS, JavaScript, TSX, Kotlin, and Jetpack Compose—focused on clean, efficient solutions.";
+          }
+          if (q.indexOf("redesign") !== -1 || q.indexOf("website") !== -1 || q.indexOf("flapora") !== -1 || q.indexOf("old") !== -1) {
+            return "Flapora specializes in transforming outdated business websites into modern, responsive, high-trust digital experiences. Tap 'View' above or check the Pricing section below!";
+          }
+          return "Thanks for asking! Whether it's a Flapora website redesign or a Kotlin & Jetpack Compose Android app, share your goals in the Contact section below and we'll map it out.";
+        }
+
+        function submitChatPrompt(text) {
+          var trimmed = text.trim();
+          if (!trimmed) return;
+          var now = new Date();
+          var timeLabel = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
+          chatHistory.push({
+            sender: "user",
+            text: trimmed,
+            time: timeLabel
+          });
+          renderMessages(chatHistory);
+
+          setTimeout(function () {
+            chatHistory.push({
+              sender: "bot",
+              text: generateStudioReply(trimmed),
+              time: timeLabel
+            });
+            renderMessages(chatHistory);
+          }, 180);
+        }
+
+        if (chatForm && chatInput) {
+          chatForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            submitChatPrompt(chatInput.value);
+            chatInput.value = "";
+          });
+        }
+
+        document.querySelectorAll(".quick-prompt-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var prompt = btn.getAttribute("data-prompt");
+            if (prompt) submitChatPrompt(prompt);
+          });
+        });
+
+        if (resetChatBtn) {
+          resetChatBtn.addEventListener("click", function () {
+            chatHistory = getInitialMessages();
+            renderMessages(chatHistory);
+          });
+        }
+
+        if (orbTriggerBtn && chatInput) {
+          orbTriggerBtn.addEventListener("click", function () {
+            chatInput.focus();
+          });
+        }
+
+        // Scope Modal Controls with accessible focus restore
+        var scopeModal = document.getElementById("scopeModal");
+        var openScopeModalBtn = document.getElementById("openScopeModalBtn");
+        var closeScopeModalBtn = document.getElementById("closeScopeModalBtn");
+        var dismissScopeBtn = document.getElementById("dismissScopeBtn");
+        var scopeStartProjectBtn = document.getElementById("scopeStartProjectBtn");
+        var lastFocusedEl = null;
+
+        function openScopeModal() {
+          if (scopeModal) {
+            lastFocusedEl = document.activeElement;
+            scopeModal.classList.add("is-open");
+            if (closeScopeModalBtn) {
+              closeScopeModalBtn.focus();
+            }
+          }
+        }
+
+        function closeScopeModal() {
+          if (scopeModal && scopeModal.classList.contains("is-open")) {
+            scopeModal.classList.remove("is-open");
+            if (lastFocusedEl && typeof lastFocusedEl.focus === "function") {
+              lastFocusedEl.focus();
+            }
+          }
+        }
+
+        if (openScopeModalBtn) openScopeModalBtn.addEventListener("click", openScopeModal);
+        if (closeScopeModalBtn) closeScopeModalBtn.addEventListener("click", closeScopeModal);
+        if (dismissScopeBtn) dismissScopeBtn.addEventListener("click", closeScopeModal);
+        if (scopeStartProjectBtn) scopeStartProjectBtn.addEventListener("click", closeScopeModal);
+        if (scopeModal) {
+          scopeModal.addEventListener("click", function (e) {
+            if (e.target === scopeModal) closeScopeModal();
+          });
+        }
+
+        // Before / After Website Redesign Toggle
+        var btnLegacyView = document.getElementById("btnLegacyView");
+        var btnModernView = document.getElementById("btnModernView");
+        var redesignViewport = document.getElementById("redesignViewport");
+        var previewTag = document.getElementById("previewTag");
+        var previewHeadline = document.getElementById("previewHeadline");
+        var statMobile = document.getElementById("statMobile");
+        var statLayout = document.getElementById("statLayout");
+        var statCode = document.getElementById("statCode");
+
+        function setRedesignMode(mode) {
+          if (!redesignViewport || !btnLegacyView || !btnModernView) return;
+          if (mode === "legacy") {
+            btnLegacyView.classList.add("is-active");
+            btnLegacyView.setAttribute("aria-selected", "true");
+            btnModernView.classList.remove("is-active");
+            btnModernView.setAttribute("aria-selected", "false");
+
+            redesignViewport.classList.remove("is-modern");
+            redesignViewport.classList.add("is-legacy");
+            previewTag.textContent = "Legacy Business Website";
+            previewTag.style.color = "#6b7280";
+            previewHeadline.textContent = "Fixed-width tables, cramped mobile text, and buried contact details";
+            statMobile.textContent = "Broken";
+            statLayout.textContent = "Cluttered";
+            statCode.textContent = "Outdated";
+          } else {
+            btnModernView.classList.add("is-active");
+            btnModernView.setAttribute("aria-selected", "true");
+            btnLegacyView.classList.remove("is-active");
+            btnLegacyView.setAttribute("aria-selected", "false");
+
+            redesignViewport.classList.remove("is-legacy");
+            redesignViewport.classList.add("is-modern");
+            previewTag.textContent = "Flapora Modern Build";
+            previewTag.style.color = "var(--accent)";
+            previewHeadline.textContent = "Responsive hero, clear service hierarchy, and instant mobile inquiry flow";
+            statMobile.textContent = "100%";
+            statLayout.textContent = "Clean";
+            statCode.textContent = "Semantic";
+          }
+        }
+
+        if (btnLegacyView) {
+          btnLegacyView.addEventListener("click", function () {
+            setRedesignMode("legacy");
+          });
+        }
+        if (btnModernView) {
+          btnModernView.addEventListener("click", function () {
+            setRedesignMode("modern");
+          });
+        }
+
+        // Copy Studio Email Button
+        var copyEmailBtn = document.getElementById("copyEmailBtn");
+        var copyEmailLabel = document.getElementById("copyEmailLabel");
+        if (copyEmailBtn && copyEmailLabel) {
+          copyEmailBtn.addEventListener("click", function () {
+            var email = "saifeemushahid8@gmail.com";
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(email).then(function () {
+                copyEmailLabel.textContent = "Copied: " + email;
+                setTimeout(function () {
+                  copyEmailLabel.textContent = "Copy studio email: " + email;
+                }, 2200);
+              }).catch(function () {
+                copyEmailLabel.textContent = "Email: " + email;
+              });
+            } else {
+              copyEmailLabel.textContent = "Email: " + email;
+            }
+          });
+        }
+
+        // Pricing Package Selector & Additional Work Estimator
+        var currentPkg = {
+          name: "Business",
+          pages: "Up to 5 pages",
+          maxPages: 5,
+          price: 11999
+        };
+        var activePlanSummary = "";
+
+        var priceCards = document.querySelectorAll("#pricingPackagesGrid .price-card");
+        var addonCheckboxes = document.querySelectorAll("#addonsTableBody .addon-checkbox");
+        var clearAddonsBtn = document.getElementById("clearAddonsBtn");
+        var estPackageLabel = document.getElementById("estPackageLabel");
+        var estPackagePrice = document.getElementById("estPackagePrice");
+        var estAddonList = document.getElementById("estAddonList");
+        var estTotalDisplay = document.getElementById("estTotalDisplay");
+        var applyEstimateBtn = document.getElementById("applyEstimateBtn");
+        var selectedPlanBanner = document.getElementById("selectedPlanBanner");
+        var selectedPlanText = document.getElementById("selectedPlanText");
+        var clearSelectedPlanBtn = document.getElementById("clearSelectedPlanBtn");
+
+        function formatInr(val) {
+          return "₹" + Math.round(val).toLocaleString("en-IN");
+        }
+
+        function updateEstimate() {
+          if (!estPackageLabel || !estPackagePrice || !estAddonList || !estTotalDisplay) return;
+
+          estPackageLabel.textContent = currentPkg.name + " (" + currentPkg.pages + ")";
+          estPackagePrice.textContent = formatInr(currentPkg.price);
+
+          var minTotal = currentPkg.price;
+          var maxTotal = currentPkg.price;
+          var hasUrgent = false;
+          var selectedNames = [];
+
+          estAddonList.innerHTML = "";
+
+          addonCheckboxes.forEach(function (cb) {
+            if (!cb.checked) return;
+            var name = cb.getAttribute("data-name") || "";
+            var type = cb.getAttribute("data-type") || "fixed";
+            var minVal = parseInt(cb.getAttribute("data-min") || "0", 10);
+            var maxVal = parseInt(cb.getAttribute("data-max") || "0", 10);
+
+            if (type === "urgent") {
+              hasUrgent = true;
+              selectedNames.push(name + " (+25%)");
+            } else if (type === "per-page") {
+              var minPageCost = minVal * 1;
+              var maxPageCost = maxVal * currentPkg.maxPages;
+              minTotal += minPageCost;
+              maxTotal += maxPageCost;
+              var pageLabel = currentPkg.maxPages === 1 ? "₹300" : "₹300–" + formatInr(maxPageCost);
+              selectedNames.push(name + " (" + pageLabel + ")");
+            } else if (type === "range") {
+              minTotal += minVal;
+              maxTotal += maxVal;
+              selectedNames.push(name + " (" + formatInr(minVal) + "–" + formatInr(maxVal) + ")");
+            } else {
+              minTotal += minVal;
+              maxTotal += maxVal;
+              selectedNames.push(name + " (" + formatInr(minVal) + ")");
+            }
+          });
+
+          if (hasUrgent) {
+            minTotal = Math.round(minTotal * 1.25);
+            maxTotal = Math.round(maxTotal * 1.25);
+          }
+
+          if (selectedNames.length === 0) {
+            var emptySpan = document.createElement("span");
+            emptySpan.textContent = "None selected";
+            estAddonList.appendChild(emptySpan);
+          } else {
+            selectedNames.forEach(function (item) {
+              var row = document.createElement("div");
+              row.textContent = "• " + item;
+              estAddonList.appendChild(row);
+            });
+          }
+
+          var totalStr = minTotal === maxTotal ? formatInr(minTotal) : formatInr(minTotal) + "–" + formatInr(maxTotal);
+          estTotalDisplay.textContent = totalStr;
+        }
+
+        priceCards.forEach(function (card) {
+          var btn = card.querySelector(".price-select-btn");
+          if (!btn) return;
+          btn.addEventListener("click", function () {
+            priceCards.forEach(function (c) {
+              c.classList.remove("is-selected");
+              var b = c.querySelector(".price-select-btn");
+              if (b) {
+                b.classList.remove("btn-primary");
+                b.classList.add("btn-secondary");
+                b.textContent = "Select " + (c.getAttribute("data-pkg") || "");
+              }
+            });
+
+            card.classList.add("is-selected");
+            btn.classList.remove("btn-secondary");
+            btn.classList.add("btn-primary");
+            btn.textContent = "Selected";
+
+            currentPkg = {
+              name: card.getAttribute("data-pkg") || "Business",
+              pages: card.getAttribute("data-pages") || "Up to 5 pages",
+              maxPages: parseInt(card.getAttribute("data-maxpages") || "5", 10),
+              price: parseInt(card.getAttribute("data-price") || "11999", 10)
+            };
+
+            updateEstimate();
+          });
+        });
+
+        addonCheckboxes.forEach(function (cb) {
+          cb.addEventListener("change", updateEstimate);
+        });
+
+        if (clearAddonsBtn) {
+          clearAddonsBtn.addEventListener("click", function () {
+            addonCheckboxes.forEach(function (cb) {
+              cb.checked = false;
+            });
+            updateEstimate();
+          });
+        }
+
+        if (applyEstimateBtn) {
+          applyEstimateBtn.addEventListener("click", function () {
+            var selectedAddons = [];
+            addonCheckboxes.forEach(function (cb) {
+              if (cb.checked) selectedAddons.push(cb.getAttribute("data-name"));
+            });
+            var estTotal = estTotalDisplay ? estTotalDisplay.textContent : formatInr(currentPkg.price);
+            activePlanSummary =
+              currentPkg.name +
+              " (" +
+              currentPkg.pages +
+              ")" +
+              (selectedAddons.length ? " + " + selectedAddons.join(", ") : "") +
+              " · Est. " +
+              estTotal;
+
+            if (selectedPlanBanner && selectedPlanText) {
+              selectedPlanText.textContent = "Selected Plan: " + activePlanSummary;
+              selectedPlanBanner.style.display = "flex";
+            }
+
+            // Ensure "Website Redesign" service tab is active
+            serviceButtons.forEach(function (b) {
+              b.classList.remove("is-active");
+              if (b.getAttribute("data-service") === "Website Redesign") {
+                b.classList.add("is-active");
+              }
+            });
+            selectedService = "Website Redesign";
+
+            var contactSection = document.getElementById("contact");
+            if (contactSection) {
+              contactSection.scrollIntoView({ behavior: "smooth" });
+            }
+          });
+        }
+
+        if (clearSelectedPlanBtn && selectedPlanBanner) {
+          clearSelectedPlanBtn.addEventListener("click", function () {
+            activePlanSummary = "";
+            selectedPlanBanner.style.display = "none";
+          });
+        }
+
+        updateEstimate();
+
+        // Project Inquiry Service Selector + Form Validation
+        var selectedService = "Website Redesign";
+        var serviceButtons = document.querySelectorAll("#serviceSelector .seg-btn");
+        serviceButtons.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            serviceButtons.forEach(function (b) {
+              b.classList.remove("is-active");
+            });
+            btn.classList.add("is-active");
+            selectedService = btn.getAttribute("data-service") || "Website Redesign";
+          });
+        });
+
+        // Make entire table row in Additional Work clickable
+        document.querySelectorAll("#addonsTableBody tr").forEach(function (row) {
+          row.addEventListener("click", function (e) {
+            if (e.target.closest("label") || e.target.tagName === "INPUT") return;
+            var cb = row.querySelector(".addon-checkbox");
+            if (cb) {
+              cb.checked = !cb.checked;
+              updateEstimate();
+            }
+          });
+        });
+
+        // Active Nav Scroll-Spy
+        var navLinks = document.querySelectorAll(".nav-links .nav-link");
+        var trackedSections = ["services", "pricing", "about", "process", "contact"]
+          .map(function (id) {
+            return document.getElementById(id);
+          })
+          .filter(Boolean);
+
+        if ("IntersectionObserver" in window && trackedSections.length && navLinks.length) {
+          var sectionObserver = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  var activeHref = "#" + entry.target.id;
+                  navLinks.forEach(function (link) {
+                    if (link.getAttribute("href") === activeHref) {
+                      link.classList.add("is-active");
+                    } else {
+                      link.classList.remove("is-active");
+                    }
+                  });
+                }
+              });
+            },
+            { rootMargin: "-35% 0px -55% 0px", threshold: 0 }
+          );
+          trackedSections.forEach(function (sec) {
+            sectionObserver.observe(sec);
+          });
+        }
+
+        var inquiryForm = document.getElementById("projectInquiryForm");
+        var formErrorMsg = document.getElementById("formErrorMsg");
+        var formSuccessBox = document.getElementById("formSuccessBox");
+        var formSuccessSummary = document.getElementById("formSuccessSummary");
+        var mailtoFallbackLink = document.getElementById("mailtoFallbackLink");
+        var gmailWebFallbackLink = document.getElementById("gmailWebFallbackLink");
+        var clientNameInput = document.getElementById("clientName");
+        var clientEmailInput = document.getElementById("clientEmail");
+        var projectNotesInput = document.getElementById("projectNotes");
+
+        [clientNameInput, clientEmailInput, projectNotesInput].forEach(function (field) {
+          if (!field) return;
+          field.addEventListener("input", function () {
+            field.classList.remove("is-invalid");
+            field.removeAttribute("aria-invalid");
+            if (formErrorMsg && formErrorMsg.style.display === "block") {
+              formErrorMsg.style.display = "none";
+            }
+          });
+        });
+
+        function showFieldError(field, message) {
+          if (field) {
+            field.classList.add("is-invalid");
+            field.setAttribute("aria-invalid", "true");
+            field.focus();
+          }
+          if (formErrorMsg) {
+            formErrorMsg.textContent = message;
+            formErrorMsg.style.display = "block";
+          }
+        }
+
+        if (inquiryForm) {
+          inquiryForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var name = clientNameInput ? clientNameInput.value.trim() : "";
+            var email = clientEmailInput ? clientEmailInput.value.trim() : "";
+            var urlEl = document.getElementById("projectUrl");
+            var url = urlEl ? urlEl.value.trim() : "";
+            var notes = projectNotesInput ? projectNotesInput.value.trim() : "";
+
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!name) {
+              showFieldError(clientNameInput, "Please enter your name.");
+              return;
+            }
+            if (!emailPattern.test(email)) {
+              showFieldError(clientEmailInput, "Please enter a valid email address.");
+              return;
+            }
+            if (notes.length < 10) {
+              showFieldError(
+                projectNotesInput,
+                "Please share a few details about your website or Android app (at least 10 characters)."
+              );
+              return;
+            }
+
+            if (formErrorMsg) formErrorMsg.style.display = "none";
+
+            var mailSubject = encodeURIComponent("[Flapora] " + selectedService + " Inquiry from " + name);
+            var mailBody = encodeURIComponent(
+              "Name: " +
+                name +
+                "\nEmail: " +
+                email +
+                "\nService: " +
+                selectedService +
+                (activePlanSummary ? "\nSelected Pricing Plan: " + activePlanSummary : "") +
+                (url ? "\nReference: " + url : "") +
+                "\n\nProject Details:\n" +
+                notes
+            );
+
+            var mailtoUrl = "mailto:saifeemushahid8@gmail.com?subject=" + mailSubject + "&body=" + mailBody;
+            var gmailWebUrl =
+              "https://mail.google.com/mail/?view=cm&fs=1&to=saifeemushahid8@gmail.com&su=" +
+              mailSubject +
+              "&body=" +
+              mailBody;
+
+            if (mailtoFallbackLink) {
+              mailtoFallbackLink.href = mailtoUrl;
+            }
+            if (gmailWebFallbackLink) {
+              gmailWebFallbackLink.href = gmailWebUrl;
+            }
+            if (formSuccessSummary) {
+              formSuccessSummary.textContent =
+                "Opening your Gmail / email app for saifeemushahid8@gmail.com with your inquiry details pre-filled.";
+            }
+            if (formSuccessBox) {
+              formSuccessBox.style.display = "flex";
+            }
+
+            // Directly trigger Gmail / default mail app on Send click
+            var directMailLink = document.createElement("a");
+            directMailLink.href = mailtoUrl;
+            directMailLink.style.display = "none";
+            document.body.appendChild(directMailLink);
+            directMailLink.click();
+            document.body.removeChild(directMailLink);
+          });
+        }
+
+        // Escape key closes modal and mobile menu
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            closeScopeModal();
+            if (mobileDrawer && mobileMenuBtn && mobileDrawer.classList.contains("is-open")) {
+              mobileDrawer.classList.remove("is-open");
+              mobileMenuBtn.setAttribute("aria-expanded", "false");
+            }
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
